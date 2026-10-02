@@ -22,8 +22,11 @@ class TipCalculatorViewModel : ViewModel() {
     val uiState: StateFlow<TipUiState> = _uiState.asStateFlow()
 
     fun updateBillAmount(amount: String) {
-        _uiState.update { it.copy(billAmountInput = amount) }
-        calculateValues()
+        val validatedAmount = amount.replace(",", ".")
+        if (validatedAmount.count { it == '.' } <= 1) {
+            _uiState.update { it.copy(billAmountInput = validatedAmount) }
+            calculateValues()
+        }
     }
 
     fun updateTipPercentage(percentage: Float) {
