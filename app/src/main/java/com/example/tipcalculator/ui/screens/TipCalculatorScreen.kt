@@ -54,6 +54,18 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
                 onCheckedChange = { viewModel.updateRoundUp(it) }
             )
         }
+        Text(text = "Dividir entre: ${uiState.splitBy} personas")
+        Slider(
+            value = uiState.splitBy.toFloat(),
+            onValueChange = { viewModel.updateSplitBy(it.toInt()) },
+            valueRange = 1f..20f,
+            steps = 18
+        )
+
+        ResultCard(
+            title = "Monto por persona",
+            amount = uiState.amountPerPerson
+        )
 
         ResultCard(
             title = "Total de Propina",
