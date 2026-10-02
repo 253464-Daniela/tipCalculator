@@ -39,6 +39,22 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
             steps = 29
         )
 
+        LinearProgressIndicator(
+            progress = { uiState.tipPercentage / 30f },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Redondear propina")
+            Switch(
+                checked = uiState.roundUp,
+                onCheckedChange = { viewModel.updateRoundUp(it) }
+            )
+        }
+
         ResultCard(
             title = "Total de Propina",
             amount = uiState.tipAmount
@@ -48,6 +64,12 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
             title = "Total a Pagar",
             amount = uiState.totalAmount
         )
+        Button(
+            onClick = { viewModel.reset() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Reiniciar")
+        }
     }
 }
 
