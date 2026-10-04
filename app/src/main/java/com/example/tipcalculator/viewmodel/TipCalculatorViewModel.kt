@@ -55,8 +55,9 @@ class TipCalculatorViewModel : ViewModel() {
         var tip = billAmount * (currentState.tipPercentage / 100)
 
         if (currentState.roundUp) {
-            tip = ceil(tip)
+            tip = ceil(tip) // la funcion ceil redondea hacia arriba
         }
+
 
         val total = billAmount + tip
         val perPerson = if (currentState.splitBy > 0) total / currentState.splitBy else 0.0
@@ -65,6 +66,7 @@ class TipCalculatorViewModel : ViewModel() {
             it.copy(
                 tipAmount = tip,
                 totalAmount = total,
+
                 amountPerPerson = perPerson
             )
         }

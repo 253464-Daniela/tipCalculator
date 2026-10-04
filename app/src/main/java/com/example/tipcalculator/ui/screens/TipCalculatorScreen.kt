@@ -7,17 +7,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tipcalculator.viewmodel.TipCalculatorViewModel
 import java.text.NumberFormat
 
 @Composable
 fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .safeDrawingPadding()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -37,11 +39,6 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
             onValueChange = { viewModel.updateTipPercentage(it) },
             valueRange = 0f..30f,
             steps = 29
-        )
-
-        LinearProgressIndicator(
-            progress = { uiState.tipPercentage / 30f },
-            modifier = Modifier.fillMaxWidth()
         )
 
         Row(
@@ -71,6 +68,7 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
             title = "Total de Propina",
             amount = uiState.tipAmount
         )
+
 
         ResultCard(
             title = "Total a Pagar",
