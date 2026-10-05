@@ -1,7 +1,10 @@
 package com.example.tipcalculator.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -9,6 +12,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tipcalculator.ui.components.ProfileCard
 import com.example.tipcalculator.viewmodel.TipCalculatorViewModel
 import java.text.NumberFormat
 
@@ -20,6 +24,7 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
         modifier = Modifier
             .fillMaxSize()
             .safeDrawingPadding()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -74,11 +79,25 @@ fun TipCalculatorScreen(viewModel: TipCalculatorViewModel = viewModel()) {
             title = "Total a Pagar",
             amount = uiState.totalAmount
         )
+
+        AnimatedVisibility(visible = uiState.isInfoVisible) {
+            ProfileCard(
+                name = "Daniela Michell Zúñiga",
+                enrollment = "253464"
+            )
+        }
+
         Button(
             onClick = { viewModel.reset() },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Reiniciar")
+        }
+        Button(
+            onClick = { viewModel.showInfo() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(if (uiState.isInfoVisible) "Ocultar info" else "Mostrar info")
         }
     }
 }

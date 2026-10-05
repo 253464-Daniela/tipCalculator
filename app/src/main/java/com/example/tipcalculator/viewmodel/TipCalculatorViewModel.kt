@@ -14,7 +14,8 @@ data class TipUiState(
     val roundUp: Boolean = false,
     val tipAmount: Double = 0.0,
     val totalAmount: Double = 0.0,
-    val amountPerPerson: Double = 0.0
+    val amountPerPerson: Double = 0.0,
+    val isInfoVisible: Boolean = false
 )
 
 class TipCalculatorViewModel : ViewModel() {
@@ -46,6 +47,10 @@ class TipCalculatorViewModel : ViewModel() {
 
     fun reset() {
         _uiState.value = TipUiState()
+    }
+
+    fun showInfo() {
+        _uiState.update { it.copy(isInfoVisible = !it.isInfoVisible) }
     }
 
     private fun calculateValues() {
